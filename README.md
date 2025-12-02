@@ -4,13 +4,13 @@ Python solutions for [Advent of Code 2025](https://adventofcode.com/2025) challe
 
 ## Overview
 
-This repository contains solutions for the Advent of Code 2025 programming puzzles.
+This repository contains scripted solutions for the Advent of Code 2025 programming puzzles.
 
 **Attribution**: This framework is built upon excellent work by [Landcruiser87](https://github.com/Landcruiser87) and [anze3db](https://github.com/anze3db/adventofcode). Thank you for the inspiration and foundation!
 
 ## Features
 
-- **Automated Puzzle Fetching**: Automatically downloads puzzle descriptions and input data
+- **Automated Puzzle Fetching**: Downloads puzzle descriptions and input data
 - **Intelligent Caching**: Uses `percache` to cache API responses and avoid unnecessary requests
 - **Test Case Validation**: Validates solutions against sample data before running on full input
 - **Rich Terminal Output**: Console logging with the `rich` library
@@ -45,7 +45,7 @@ This repository contains solutions for the Advent of Code 2025 programming puzzl
    echo "your_session_cookie_here" > secret/cookie.txt
    ```
 
-   > **Note**: The `secret/` directory is excluded from Git via `.gitignore` to protect your credentials.
+   > **Note**: `secret/` directory is excluded from Git via `.gitignore` to protect credentials.
 
 ## Usage
 
@@ -87,13 +87,13 @@ AoC2025/
 ├── scripts/
 │   ├── day1/           # Day 1 solution
 │   ├── day2/           # Day 2 solution
-│   ├── day3/           # Day 3 template (ready for implementation)
-│   ├── day4/           # Day 4 template (ready for implementation)
+│   ├── day3/           # Day 3 template
+│   ├── day4/           # Day 4 template
 │   └── utils/
 │       ├── support.py      # Core utilities (API calls, caching, logging)
 │       └── day_template.py # Template for new days
 ├── secret/
-│   └── cookie.txt      # Your AOC session cookie (not tracked by Git)
+│   └── cookie.txt      # AOC session cookie (not tracked by Git)
 ├── pyproject.toml      # Poetry dependencies
 └── README.md
 ```

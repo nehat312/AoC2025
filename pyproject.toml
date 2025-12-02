@@ -1,0 +1,31 @@
+[project]
+name = "AoC2025"
+version = "0.1.0"
+description = "Advent of Code 2025"
+authors = [
+    {name = "Nate Ehat"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.1.3",
+    "matplotlib>=3.9.2",
+    "rich>=13.9.4",
+    "requests>=2.32.3",
+    "beautifulsoup4>=4.12.3",
+    "lxml>=5.3.0",
+    "percache>=0.4.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel>=6.29.5",
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false

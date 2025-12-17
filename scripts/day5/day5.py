@@ -17,7 +17,7 @@ from utils import support
 DAY: int = 5
 YEAR: int = 2025
 
-def manual_fetch():
+def manual_fetche():
     """
     Bypasses support.py to fetch data directly using the confirmed working logic.
     """
@@ -72,91 +72,98 @@ def problemsolver(arr: list, part: int):
             # Parse ID
             available_ids.append(int(line))
 
-    fresh_count = 0
-
+    # --- PART 1: Check Candidates ---
     if part == 1:
-        # Check each ID against all ranges
+        fresh_count = 0
         for ingred_id in available_ids:
             is_fresh = False
             for start, end in fresh_ranges:
                 if start <= ingred_id <= end:
                     is_fresh = True
-                    break  # Found a valid range, no need to check others
-            
+                    break
             if is_fresh:
                 fresh_count += 1
-                
         return fresh_count
 
+    # --- PART 2: Calculate Union Volume ---
     if part == 2:
-        # Placeholder for Part 2
-        return 0
+        # Sort by start time
+        fresh_ranges.sort(key=lambda x: x[0])
+        
+        if not fresh_ranges:
+            return 0
+            
+        merged_count = 0
+        
+        # Initialize with the first range
+        curr_start, curr_end = fresh_ranges[0]
+        
+        for i in range(1, len(fresh_ranges)):
+            next_start, next_end = fresh_ranges[i]
+            
+            # Check for overlap or adjacency
+            # If next starts inside (or immediately after) current, we merge.
+            # (Using +1 allows 3-4 and 5-6 to merge into 3-6)
+            if next_start <= curr_end + 1:
+                curr_end = max(curr_end, next_end)
+            else:
+                # No overlap. Add current block to total and start a new one.
+                merged_count += (curr_end - curr_start + 1)
+                curr_start, curr_end = next_start, next_end
+        
+        # Add the final block
+        merged_count += (curr_end - curr_start + 1)
+        
+        return merged_count
 
 @log_time
 def part_A():
     logger.info("Solving part A")
-    
-    # 1. Run Test Case
+    # Mock Test Case for Part A
     try:
-        testdata = [
-            "3-5",
-            "10-14",
-            "16-20",
-            "12-18",
-            "",
-            "1",
-            "5",
-            "8",
-            "11",
-            "17",
-            "32"
-        ]
+        testdata = ["3-5", "10-14", "16-20", "12-18", "", "1", "5", "8", "11", "17", "32"]
         testcase = problemsolver(testdata, 1)
-        logger.info(f"Test Case Result: {testcase}")
         assert testcase == 3, f"Test case A failed: Expected 3, got {testcase}"
     except Exception as e:
         logger.warning(f"Test case warning: {e}")
 
-    # 2. Run Real Data
-    if not data:
-        logger.error("No data available for Part A.")
-        return 0
-        
-    answerA = problemsolver(data, 1)
-    return answerA
+    if not data: return 0
+    return problemsolver(data, 1)
 
 @log_time
 def part_B():
     logger.info("Solving part B")
-    # Placeholder
-    answerB = problemsolver(data, 2)
-    return answerB
+    
+    # Mock Test Case for Part B
+    try:
+        # Same ranges as above
+        testdata = ["3-5", "10-14", "16-20", "12-18", "", "1", "5", "8", "11", "17", "32"]
+        testcase = problemsolver(testdata, 2)
+        logger.info(f"Test Case B Result: {testcase}")
+        # Ranges: 3-5 (3), 10-14, 12-18, 16-20 -> Merge 10-20 (11). Total 14.
+        assert testcase == 14, f"Test case B failed: Expected 14, got {testcase}"
+    except Exception as e:
+        logger.warning(f"Test case B warning: {e}")
+
+    if not data: return 0
+    return problemsolver(data, 2)
 
 def main():
     global data
-    
-    # 1. Try Standard Fetch
     data = support.pull_inputdata(DAY, YEAR)
-    
-    # 2. If Standard Fetch fails, use Manual Override
     if not data:
         logger.warning("Standard fetch failed. Attempting manual override...")
-        data = manual_fetch()
-
-    # 3. Hard Stop
+        data = manual_fetche()
     if not data:
-        logger.error("CRITICAL: Failed to fetch input data via any method.")
+        logger.error("CRITICAL: Failed to fetch input data.")
         return
 
-    # Solve part A
     resultA = part_A()
     logger.info(f"part A solution: \n{resultA}\n")
     
-    # Solve part B (Will be 0)
     resultB = part_B()
     logger.info(f"part B solution: \n{resultB}\n")
 
-    # Recurse lines of code
     LOC = support.recurse_dir(f'./scripts/day{DAY}/')
     logger.info(f"Lines of code \n{LOC}")
     
